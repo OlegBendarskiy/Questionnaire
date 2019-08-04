@@ -5,14 +5,15 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-<head>
+<h:head>
     <title>JSF Tutorial!</title>
-</head>
+    <link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-glass-x" />
+</h:head>
 
-<body>
+<h:body>
 <h:form>
     <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
-        <p:graphicImage name="/demo/images/login.png" />
+        Login
     </h:outputLink>
 
     <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
@@ -43,5 +44,5 @@
         }
     }
 </script>
-</body>
+</h:body>
 </html>
