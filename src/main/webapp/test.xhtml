@@ -4,13 +4,13 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-<head>
+<h:head>
     <title>Questionnaire</title>
     <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
-    <link href="css/primefaces-glass-x/theme.css" rel='stylesheet' type='text/css' />
-</head>
+    <link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-glass-x" />
+</h:head>
 
-<body>
+<h:body>
     <h:panelGrid columns="1" cellpadding="5">
         <p:commandButton value="Basic" type="button" onclick="PF('dlg1').show();" />
 
@@ -30,5 +30,5 @@
     </p:dialog>
 
 
-</body>
+</h:body>
 </html>
