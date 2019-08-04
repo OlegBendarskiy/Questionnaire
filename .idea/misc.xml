@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenCompilerTasksManager">
+    <option name="afterCompileTasks">
+      <set>
+        <MavenCompilerTask>
+          <option name="goal" value="package" />
+          <option name="projectPath" value="$PROJECT_DIR$/pom.xml" />
+        </MavenCompilerTask>
+      </set>
+    </option>
+    <option name="afterRebuildTask">
+      <set>
+        <MavenCompilerTask>
+          <option name="goal" value="package" />
+          <option name="projectPath" value="$PROJECT_DIR$/pom.xml" />
+        </MavenCompilerTask>
+      </set>
+    </option>
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectResources">
+    <resource url="http://java.sun.com/jsf/core" location="$PROJECT_DIR$/../../lib/tags/jsf_core.tld" />
+    <resource url="http://java.sun.com/jsf/html" location="$PROJECT_DIR$/../../lib/tags/html_basic.tld" />
+    <resource url="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" location="$USER_HOME$/.IdeaIC2019.1/system/extResources/8a4ed387_web-app_2_5.xsd" />
+    <resource url="http://primefaces.org/ui" location="$PROJECT_DIR$/../../lib/primefaces-7.0/META-INF/primefaces-p.taglib.xml" />
+    <resource url="http://www.w3.org/2001/xml.xsd" location="$USER_HOME$/.IdeaIC2019.1/system/extResources/9b192256_xml.xsd" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
