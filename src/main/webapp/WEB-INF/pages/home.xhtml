@@ -1,44 +1,41 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+<html xmlns = "http://www.w3.org/1999/xhtml"
+      xmlns:h = "http://java.sun.com/jsf/html"
+      xmlns:f = "http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
 <h:head>
-    <title>Questionnaire</title>
-    <link href="../../css/bootstrap.css" rel='stylesheet' type='text/css' />
+    <title>Home</title>
+    <link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-glass-x"/>
 </h:head>
 
 <h:body>
-    <p>Session ID: <h:outputText value="#{session.id}"/></p>
-
-    <h:form>
-        <h:commandButton action = "page2" value = "Page2" />
-        <p:commandButton action = "page1" value = "Page1" />
-    </h:form>
-
-    <h:form id="helloworld-form">
-        <div class="formM" style="margin: 0 auto 10px;">
-        <p:panel header="PrimeFaces Hello World Example" class="form-signup">
-            <h:panelGrid columns="2" cellpadding="4">
-                <h:outputText value="First Name: " />
-                <p:inputText id="first-name" value="#{user.firstName}" />
-                <h:outputText value="Last Name: " />
-                <p:inputText id="last-name" value="#{user.lastName}" />
-                <p:commandButton id="submit" value="Submit"
-                                 update="greeting-panel"
-                                 oncomplete="PF('greetingDialog').show()" />
-            </h:panelGrid>
-        </p:panel>
-        </div>
-
-        <p:dialog header="Greeting" widgetVar="greetingDialog"
-                  modal="true" resizable="false">
-            <h:panelGrid id="greeting-panel" columns="1" cellpadding="4">
-                <h:outputText value="Hello #{user.firstName} #{user.lastName}!"></h:outputText>
-            </h:panelGrid>
-        </p:dialog>
-
-    </h:form>
+    <ui:composition template="../templates/common.xhtml">
+        <ui:define name="messages">
+            <p:messages id="message" sticky="true" showDetail="true" closable="true"/>
+        </ui:define>
+        <ui:define name="content">
+            <div style="max-width:400px; max-height:400px; margin: auto; padding:30px ; background: aliceblue; border:1px solid darkgray;">
+                <h:graphicImage name="images/logotype.png"/>
+                <h4 style="padding:10px;">Home</h4>
+                <h:form>
+                    <h:panelGrid columns="1" style="margin: auto;">
+                        <p:inputText placeholder="Email" style="width: 300px; padding:7px;" id="email" value="#{loginBean.email}"
+                                     required="true"/>
+                        <p:password placeholder="Password" style="width: 300px; padding:7px;" id="password" value="#{loginBean.password}"
+                                    required="true"/>
+                        <f:facet name="footer">
+                            <p:commandButton value="LOG IN" id="login" style="width: 300px; " update="message"
+                                             action="#{user.performLogin()}"/>
+                        </f:facet>
+                    </h:panelGrid>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
 </h:body>
 </html>

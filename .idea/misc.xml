@@ -5,15 +5,15 @@
     <file type="web" url="file://$PROJECT_DIR$" />
   </component>
   <component name="MavenCompilerTasksManager">
-    <option name="afterCompileTasks">
+    <option name="beforeCompileTasks">
       <set>
         <MavenCompilerTask>
-          <option name="goal" value="package" />
+          <option name="goal" value="clean" />
           <option name="projectPath" value="$PROJECT_DIR$/pom.xml" />
         </MavenCompilerTask>
       </set>
     </option>
-    <option name="afterRebuildTask">
+    <option name="afterCompileTasks">
       <set>
         <MavenCompilerTask>
           <option name="goal" value="package" />

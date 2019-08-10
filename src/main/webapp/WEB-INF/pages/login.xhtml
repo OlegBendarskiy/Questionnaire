@@ -4,45 +4,40 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-    <title>JSF Tutorial!</title>
-    <link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-glass-x" />
+    <title><ui:insert name="title">Login</ui:insert></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-glass-x"/>
 </h:head>
 
 <h:body>
-<h:form>
-    <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
-        Login
-    </h:outputLink>
 
-    <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
-
-    <p:dialog header="Login" widgetVar="dlg" resizable="false">
-        <h:panelGrid columns="2" cellpadding="5">
-            <h:outputLabel for="username" value="Username:" />
-            <p:inputText id="username" value="#{userLoginView.username}" required="true" label="username" />
-
-            <h:outputLabel for="password" value="Password:" />
-            <p:password id="password" value="#{userLoginView.password}" required="true" label="password" />
-
-            <f:facet name="footer">
-                <p:commandButton value="Login" update="growl" action="#{userLoginView.login}" />
-            </f:facet>
-        </h:panelGrid>
-    </p:dialog>
-</h:form>
-
-<script type="text/javascript">
-    function handleLoginRequest(args) {
-        if(args.validationFailed || !args.loggedIn) {
-            PF('dlg').jq.effect("shake", {times:5}, 100);
-        }
-        else {
-            PF('dlg').hide();
-            $('#loginLink').fadeOut();
-        }
-    }
-</script>
+    <ui:composition template="../templates/common.xhtml">
+        <ui:define name="content">
+            <div class="custom-input-form">
+                <h:graphicImage name="images/logotype.png"/>
+                <h4 style="padding:10px;">Log In</h4>
+                <h:form id="login">
+                    <h:panelGrid columns="1" style="margin: auto;">
+                        <p:inputText placeholder="Email" id="email"
+                                     value="#{loginBean.email}"
+                                     styleClass="#{user.hasError('email') ? 'ui-state-error' : ''}">
+                        </p:inputText>
+                        <h:outputText value="#{user.getErrorMessage('email')}" style="padding:1px; color:red;"/>
+                        <p:password placeholder="Password" id="password"
+                                    value="#{loginBean.password}"
+                                    styleClass="#{(user.hasError('password') || user.hasError('confirmPassword')) ? 'ui-state-error' : ''}"/>
+                        <h:outputText value="#{user.getErrorMessage('password')}" styleClass="custom-error-message"/>
+                        <f:facet name="footer">
+                            <p:commandButton value="SIGN UP" id="login" update="login messages"
+                                             action="#{user.performLogin()}"/>
+                        </f:facet>
+                    </h:panelGrid>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
 </h:body>
 </html>

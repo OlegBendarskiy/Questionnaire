@@ -6,10 +6,6 @@
    http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          id = "WebApp_ID" version="2.5">
 
-    <welcome-file-list>
-        <welcome-file>faces/home.xhtml</welcome-file>
-    </welcome-file-list>
-
     <!--
        FacesServlet is main servlet responsible to handle all request.
        It acts as central controller.
@@ -44,12 +40,13 @@
 
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>glass-x</param-value>
+        <param-value>overcast</param-value>
     </context-param>
-    <context-param>
+
+<!--    <context-param>
         <param-name>javax.faces.CONFIG_FILES</param-name>
         <param-value>/faces-config.xml,/faces-config2.xml</param-value>
-    </context-param>
+    </context-param>-->
 
 
 </web-app>
