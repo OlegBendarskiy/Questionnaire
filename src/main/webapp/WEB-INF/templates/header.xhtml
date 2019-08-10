@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+    <link rel="icon" type="image/png" href="/../../resources/images/favicon.png"/>
+</h:head>
+<body>
+<ui:composition>
+    <h:form>
+        <!--            <p:growl id="messages"/>-->
+        <p:menubar style="padding: 20px">
+            <c:choose>
+                <c:when test="#{user.isLoggedIn()}">
+                    <p:submenu label="User" class="right-side">
+                        <p:menuitem value="Edit Profile" url="editProfile"/>
+                        <p:menuitem value="Change Password" url="changePassword"/>
+                        <p:separator/>
+                        <p:menuitem value="Log Out" action="#{user.logout()}"/>
+                    </p:submenu>
+
+                    <p:menuitem value="Responses" url="responses"/>
+
+                    <p:menuitem value="Fields" url="fields"/>
+                </c:when>
+                <c:otherwise>
+                    <p:menuitem value="Login" url="login"/>
+                </c:otherwise>
+            </c:choose>
+            <p:menuitem style="position: absolute; left: 60px; top: 20px;" url="#" icon="logotype" styleClass="iconOnlyButton"/>
+        </p:menubar>
+    </h:form>
+</ui:composition>
+</body>
+</html>

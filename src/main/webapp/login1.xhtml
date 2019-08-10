@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>JSF Tutorial!</title>
+    <link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-glass-x"/>
+</h:head>
+
+<h:body>
+    <ui:composition template="WEB-INF/templates/common.xhtml">
+        <ui:define name="messages">
+            <p:messages id="message" sticky="true" showDetail="true" closable="true"/>
+        </ui:define>
+        <ui:define name="content">
+            <div style="max-width:400px; max-height:400px; margin: auto; padding:10px ; background: aliceblue; border:1px solid darkgray;">
+                <h:form>
+                    <h:panelGrid columns="2" cellpadding="5" style="margin: auto;">
+                        <h:outputLabel for="username" value="Username:"/>
+                        <p:inputText id="username" value="#{userLoginView.username}" required="true" label="username"/>
+
+                        <h:outputLabel for="password" value="Password:"/>
+                        <p:password id="password" value="#{userLoginView.password}" required="true" label="password"/>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Login" update="message" action="#{userLoginView.login}"/>
+                        </f:facet>
+                    </h:panelGrid>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

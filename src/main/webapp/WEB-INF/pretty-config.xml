@@ -1,0 +1,40 @@
+<pretty-config xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
+                      http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
+
+    <url-mapping id="login">
+        <pattern value="/login" />
+        <view-id value="/WEB-INF/pages/login.jsf" />
+    </url-mapping>
+
+    <url-mapping id="home">
+        <pattern value="/" />
+        <view-id value="/WEB-INF/pages/home.jsf" />
+    </url-mapping>
+    <url-mapping id="success">
+        <pattern value="/success" />
+        <view-id value="/WEB-INF/pages/success.jsf" />
+    </url-mapping>
+    <url-mapping id="registration">
+        <pattern value="/registration" />
+        <view-id value="/WEB-INF/pages/registration.jsf" />
+    </url-mapping>
+    <url-mapping id="editProfile">
+        <pattern value="/editProfile" />
+        <view-id value="/WEB-INF/pages/editProfile.jsf" />
+    </url-mapping>
+    <url-mapping id="changePassword">
+        <pattern value="/changePassword" />
+        <view-id value="/WEB-INF/pages/changePassword.jsf" />
+    </url-mapping>
+    <url-mapping id="responses">
+        <pattern value="/responses" />
+        <view-id value="/WEB-INF/pages/responses.jsf" />
+    </url-mapping>
+    <url-mapping id="fields">
+        <pattern value="/fields" />
+        <view-id value="/WEB-INF/pages/fields.jsf" />
+    </url-mapping>
+
+</pretty-config>

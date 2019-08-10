@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>Registration</title>
+    <style type="text/css">
+        .ui-input-invalid {
+            background-color:red
+        }
+
+
+    </style>
+</h:head>
+
+<h:body>
+    <ui:composition template="../templates/common.xhtml">
+        <ui:define name="content">
+            <div class="custom-input-form">
+                <h4 style="padding: 0; margin: 0; text-align: left; margin: 0;">Edit Profile</h4>
+                <p:separator/>
+                <h:form id="editProfile">
+                    <h:panelGrid columns="1" style="margin: auto;">
+                        <h4><h:outputText value="Email" for="email"/></h4>
+                        <p:inputText placeholder="" id="email"
+                                     value="#{signUpBean.email}"
+                                     styleClass="#{user.hasError('email') ? 'ui-state-' : ''}">
+                        </p:inputText>
+                        <h:outputText value="#{user.getErrorMessage('email')}" styleClass="custom-error-message"/>
+                        <p:password placeholder="Password *" id="password"
+                                    value="#{signUpBean.password}"
+                                    styleClass="#{(user.hasError('password') || user.hasError('confirmPassword')) ? 'ui-state-error' : ''}"/>
+                        <h:outputText value="#{user.getErrorMessage('password')}" styleClass="custom-error-message"/>
+
+                        <p:password placeholder="Confirm Password *"  id="confirmPassword"
+                                    value="#{signUpBean.confirmPassword}"
+                                    styleClass="#{(user.hasError('confirmPassword') || user.hasError('password')) ? 'ui-state-error' : ''}"/>
+                        <h:outputText value="#{user.getErrorMessage('confirmPassword')}" styleClass="custom-error-message"/>
+                        <p:inputText placeholder="First Name" id="firstName"
+                                     value="#{signUpBean.firstName}"
+                                     styleClass="#{user.hasError('firstName') ? 'ui-state-error' : ''}"/>
+                        <h:outputText value="#{user.getErrorMessage('firstName')}" styleClass="custom-error-message"/>
+                        <p:inputText placeholder="Last Name" id="lastName"
+                                     value="#{signUpBean.lastName}"
+                                     styleClass="#{user.hasError('lastName') ? 'ui-state-error' : ''}"/>
+                        <h:outputText value="#{user.getErrorMessage('lastName')}" styleClass="custom-error-message"/>
+                        <p:inputText placeholder="Phone Number" id="phoneNumber"
+                                     value="#{signUpBean.phoneNumber}"
+                                     styleClass="#{user.hasError('phoneNumber') ? 'ui-state-error' : ''}"/>
+                        <h:outputText value="#{user.getErrorMessage('phoneNumber')}" styleClass="custom-error-message"/>
+                        <f:facet name="footer">
+                            <p:commandButton value="SIGN UP" id="signUp" update="messages"
+                                             action="#{user.performRegistration()}"/>
+                        </f:facet>
+                    </h:panelGrid>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
