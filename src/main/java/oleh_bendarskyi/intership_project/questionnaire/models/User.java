@@ -17,7 +17,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "q_user", schema = "public")
-public class User {
+public class User implements Serializable {
 
     @Id
    @GeneratedValue(strategy = GenerationType.SEQUENCE)

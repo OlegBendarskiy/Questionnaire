@@ -34,7 +34,7 @@ public class UserDaoImpl implements UserDao {
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
-            e.printStackTrace();
+            LOGGER.error("Error creating user: " + user, e);
         }
         return user;
     }
@@ -49,7 +49,7 @@ public class UserDaoImpl implements UserDao {
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
-            e.printStackTrace();
+            LOGGER.error("Error finding user with id: " + id, e);
         }
         return user;
     }
@@ -70,12 +70,14 @@ public class UserDaoImpl implements UserDao {
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
+            LOGGER.error("Error finding user with email: " + email, e);
+
         }
         return user;
     }
 
     @Override
-    public User update(User user) {
+    public boolean update(User user) {
         Transaction tx = null;
         try (Session session = factory.openSession()) {
             tx = session.beginTransaction();
@@ -83,9 +85,10 @@ public class UserDaoImpl implements UserDao {
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
-            e.printStackTrace();
+            LOGGER.error("Error updating user with id: " + user.getId(), e);
+            return false;
         }
-        return user;
+        return true;
     }
 
     @Override
@@ -97,7 +100,7 @@ public class UserDaoImpl implements UserDao {
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
-            e.printStackTrace();
+            LOGGER.error("Error deleting user with id: " + user.getId(), e);
         }
         return user;
     }
@@ -112,7 +115,7 @@ public class UserDaoImpl implements UserDao {
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
-            e.printStackTrace();
+            LOGGER.error("Error finding all users", e);
         }
         return users;
     }

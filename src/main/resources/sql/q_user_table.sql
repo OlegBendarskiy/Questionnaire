@@ -1,5 +1,4 @@
-DROP DATABASE IF EXISTS zsmqnstu;
-CREATE DATABASE zsmqnstu;
+DROP TABLE IF EXISTS q_user;
 
 CREATE TABLE q_user
 (

@@ -1,7 +1,9 @@
 package oleh_bendarskyi.intership_project.questionnaire.Utils;
 
-import oleh_bendarskyi.intership_project.questionnaire.models.LogInBean;
-import oleh_bendarskyi.intership_project.questionnaire.models.SignUpBean;
+import oleh_bendarskyi.intership_project.questionnaire.beans.ChangePasswordBean;
+import oleh_bendarskyi.intership_project.questionnaire.beans.EditProfileBean;
+import oleh_bendarskyi.intership_project.questionnaire.beans.LogInBean;
+import oleh_bendarskyi.intership_project.questionnaire.beans.SignUpBean;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +33,7 @@ public class Validator {
     }
 
     private static void validateName(String name, String inputName, Map<String, String> errors) {
-        if (isNotBlank(name) && Validator.validate(name, NAME_REGEXP)) {
+        if (isNotBlank(name) && validate(name, NAME_REGEXP)) {
             errors.put(inputName, "Use letter only and starting with upper letter");
         }
     }
@@ -44,7 +46,7 @@ public class Validator {
     }
 
     private static void validatePhoneNumber(String phoneNumber, Map<String, String> errors) {
-        if (isNotBlank(phoneNumber) && Validator.validate(phoneNumber, PHONE_REGEXP)) {
+        if (isNotBlank(phoneNumber) && validate(phoneNumber, PHONE_REGEXP)) {
             errors.put("phoneNumber", "Input correct phone number.");
         }
     }
@@ -52,12 +54,13 @@ public class Validator {
     private static void validateEmail(String email, Map<String, String> errors) {
         if (isBlank(email)) {
             errors.put("email", NULL_FIELD);
-        } else if (Validator.validate(email, EMAIL_REGEXP)) {
+        } else if (validate(email, EMAIL_REGEXP)) {
             errors.put("email", "Enter correct email");
         }
     }
 
     private static void validatePasswords(String password, String confirmPassword, Map<String, String> errors) {
+        System.out.println(":::::::::::::::::::::::::::::::" + password+"|"+confirmPassword);
         if (isBlank(password)) {
             errors.put("password", NULL_FIELD);
             errors.put("confirmPassword", "Incorrect password");
@@ -78,5 +81,24 @@ public class Validator {
             errors.put("password", NULL_FIELD);
         }
         return errors;
+    }
+
+    public static Map<String, String> validateEditProfileForm(EditProfileBean bean) {
+        Map<String, String> errors = new HashMap<>();
+        validateName(bean.getFirstName(), "firstName", errors);
+        validateName(bean.getLastName(), "lastName", errors);
+        validateEmail(bean.getEmail(), errors);
+        validatePhoneNumber(bean.getPhoneNumber(), errors);
+        return errors;
+    }
+
+    public static Map<String, String> validateChangePasswordForm(ChangePasswordBean bean) {
+        Map<String, String> errors = new HashMap<>();
+        if(isBlank(bean.getCurrentPassword()) || validate(bean.getCurrentPassword(), PASSWORD_REGEXP)){
+            errors.put("currentPassword", "Incorrect password");
+        }
+        validatePasswords(bean.getNewPassword(), bean.getConfirmPassword(), errors);
+        return errors;
+
     }
 }

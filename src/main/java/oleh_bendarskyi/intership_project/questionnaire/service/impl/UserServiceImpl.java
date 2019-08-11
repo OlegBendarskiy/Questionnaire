@@ -5,9 +5,12 @@ import oleh_bendarskyi.intership_project.questionnaire.dao.impl.UserDaoImpl;
 import oleh_bendarskyi.intership_project.questionnaire.models.User;
 import oleh_bendarskyi.intership_project.questionnaire.service.UserService;
 
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 import java.util.List;
-import java.util.Map;
 
+@ManagedBean(name="userService")
+@ApplicationScoped
 public class UserServiceImpl implements UserService {
 
     private UserDao dao;
@@ -23,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(long id) {
-        return null;
+        return dao.findById(id);
     }
 
     @Override
@@ -32,8 +35,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(User user) {
-        return null;
+    public boolean update(User updatedUser) {
+        return dao.update(updatedUser);
     }
 
     @Override

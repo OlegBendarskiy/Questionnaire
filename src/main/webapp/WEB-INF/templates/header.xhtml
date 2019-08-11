@@ -17,7 +17,10 @@
         <!--            <p:growl id="messages"/>-->
         <p:menubar style="padding: 20px">
             <c:choose>
-                <c:when test="#{user.isLoggedIn()}">
+                <c:when test="#{empty user.user}">
+                    <p:menuitem value="Login" url="login"/>
+                </c:when>
+                <c:otherwise>
                     <p:submenu label="User" class="right-side">
                         <p:menuitem value="Edit Profile" url="editProfile"/>
                         <p:menuitem value="Change Password" url="changePassword"/>
@@ -28,12 +31,9 @@
                     <p:menuitem value="Responses" url="responses"/>
 
                     <p:menuitem value="Fields" url="fields"/>
-                </c:when>
-                <c:otherwise>
-                    <p:menuitem value="Login" url="login"/>
                 </c:otherwise>
             </c:choose>
-            <p:menuitem style="position: absolute; left: 60px; top: 20px;" url="#" icon="logotype" styleClass="iconOnlyButton"/>
+            <p:menuitem style="position: absolute; left: 60px; top: 20px;" url="/webapp" icon="logotype" styleClass="iconOnlyButton"/>
         </p:menubar>
     </h:form>
 </ui:composition>

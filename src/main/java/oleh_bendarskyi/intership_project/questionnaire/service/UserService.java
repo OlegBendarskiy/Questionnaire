@@ -8,7 +8,7 @@ public interface UserService {
     User create(User user);
     User findById(long id);
     User findByEmail(String email);
-    User update(User user);
+    boolean update(User user);
     User delete(User user);
     List<User> getAll();
 }

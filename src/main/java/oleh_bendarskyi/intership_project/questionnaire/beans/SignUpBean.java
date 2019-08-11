@@ -1,4 +1,4 @@
-package oleh_bendarskyi.intership_project.questionnaire.models;
+package oleh_bendarskyi.intership_project.questionnaire.beans;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 
 @Data
-@ManagedBean(name = "signUpBean", eager = true)
+@ManagedBean(name = "signUpBean")
 @RequestScoped
 public class SignUpBean implements Serializable {
     private String email;
