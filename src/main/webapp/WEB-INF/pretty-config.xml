@@ -36,5 +36,9 @@
         <pattern value="/fields" />
         <view-id value="/WEB-INF/pages/fields.jsf" />
     </url-mapping>
+    <url-mapping id="fieldsDialog">
+        <pattern value="/fields/#{questionnaireFieldId}" />
+        <view-id value="/WEB-INF/pages/fieldsDialog.jsf" />
+    </url-mapping>
 
 </pretty-config>

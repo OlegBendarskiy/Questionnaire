@@ -1,13 +1,13 @@
 package oleh_bendarskyi.intership_project.questionnaire.controllers;
 
 import lombok.Data;
-import oleh_bendarskyi.intership_project.questionnaire.Utils.Util;
-import oleh_bendarskyi.intership_project.questionnaire.Utils.Validator;
+import oleh_bendarskyi.intership_project.questionnaire.utils.Constants;
+import oleh_bendarskyi.intership_project.questionnaire.utils.Util;
+import oleh_bendarskyi.intership_project.questionnaire.utils.Validator;
 import oleh_bendarskyi.intership_project.questionnaire.beans.ChangePasswordBean;
 import oleh_bendarskyi.intership_project.questionnaire.beans.EditProfileBean;
 import oleh_bendarskyi.intership_project.questionnaire.beans.LogInBean;
 import oleh_bendarskyi.intership_project.questionnaire.beans.SignUpBean;
-import oleh_bendarskyi.intership_project.questionnaire.exeptions.UserWithTisEmailIsAlreadyExistException;
 import oleh_bendarskyi.intership_project.questionnaire.models.User;
 import oleh_bendarskyi.intership_project.questionnaire.service.UserService;
 import org.apache.log4j.Logger;
@@ -30,25 +30,19 @@ public class UserManager implements Serializable {
 
     private static final Logger LOGGER =
             Logger.getLogger(UserManager.class);
-    public static final String INVALID_INPUT = "INVALID INPUT!";
-    public static final String ERROR_CHANGING_PASSWORD = "ERROR CHANGING PASSWORD!";
-    public static final String NO_CHANGES_DETECTED = "NO CHANGES DETECTED!";
-    public static final String PASSWORD_UPDATED_SUCCESSFULLY = "PASSWORD UPDATED SUCCESSFULLY!";
-    public static final String PROFILE_UPDATED_SUCCESSFULLY = "PROFILE UPDATED SUCCESSFULLY!";
-    public static final String ERROR_EDITING_USER = "ERROR EDITING USER!";
     private Map<String, String> errors;
     private User user;
-    @ManagedProperty(value = "#{userService}")
+    @ManagedProperty(value = "#{"+ Constants.USER_SERVICE +"}")
     private UserService userService;
 
     public void performLogin() {
         FacesContext context = FacesContext.getCurrentInstance();
-        LogInBean bean = (LogInBean) context.getExternalContext().getRequestMap().get("loginBean");
+        LogInBean bean = (LogInBean) context.getExternalContext().getRequestMap().get(Constants.LOGIN_BEAN);
         errors = Validator.validateLogInFormBean(bean);
         if (!errors.isEmpty()) {
             String s = errors.entrySet().stream().map(entry -> entry.getKey() + ": " + entry.getValue() + "; ").collect(Collectors.joining());
-            LOGGER.info(INVALID_INPUT + s);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, INVALID_INPUT, s));
+            LOGGER.info(Constants.INVALID_INPUT + s);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Constants.INVALID_INPUT, s));
             return;
         }
 
@@ -75,20 +69,20 @@ public class UserManager implements Serializable {
 
     public void performRegistration() {
         FacesContext context = FacesContext.getCurrentInstance();
-        SignUpBean bean = (SignUpBean) context.getExternalContext().getRequestMap().get("signUpBean");
+        SignUpBean bean = (SignUpBean) context.getExternalContext().getRequestMap().get(Constants.SIGN_UP_BEAN);
         errors = Validator.validateSignUpForm(bean);
         if (!errors.isEmpty()) {
             String s = errors.entrySet().stream().map(entry -> entry.getKey() + ": " + entry.getValue() + "; ").collect(Collectors.joining());
-            LOGGER.info(INVALID_INPUT + s);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, INVALID_INPUT, s));
+            LOGGER.info(Constants.INVALID_INPUT + s);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Constants.INVALID_INPUT, s));
             return;
         }
         User newUser = Util.convertSignUpBean(bean);
         if (isExistingEmail(newUser)) {
             String message = "User with that email already exists";
             errors.put("email", "User with that email already exists");
-            LOGGER.info(INVALID_INPUT + message);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, INVALID_INPUT, message));
+            LOGGER.info(Constants.INVALID_INPUT + message);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Constants.INVALID_INPUT, message));
             return;
         }
         user = userService.create(newUser);
@@ -97,12 +91,12 @@ public class UserManager implements Serializable {
 
     public void editProfile() {
         FacesContext context = FacesContext.getCurrentInstance();
-        EditProfileBean bean = (EditProfileBean) context.getExternalContext().getRequestMap().get("editProfileBean");
+        EditProfileBean bean = (EditProfileBean) context.getExternalContext().getRequestMap().get(Constants.EDIT_PROFILE_BEAN);
         errors = Validator.validateEditProfileForm(bean);
         if (!errors.isEmpty()) {
             String s = errors.entrySet().stream().map(entry -> entry.getKey() + ": " + entry.getValue() + "; ").collect(Collectors.joining());
-            LOGGER.info(INVALID_INPUT + s);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, INVALID_INPUT, s));
+            LOGGER.info(Constants.INVALID_INPUT + s);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Constants.INVALID_INPUT, s));
             return;
         }
 
@@ -110,18 +104,20 @@ public class UserManager implements Serializable {
         if (isExistingEmail(updatedUser)) {
             String message = "User with that email already exists";
             errors.put("email", "User with that email already exists");
-            LOGGER.info(INVALID_INPUT + message);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, INVALID_INPUT, message));
+            LOGGER.info(Constants.INVALID_INPUT + message);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Constants.INVALID_INPUT, message));
             return;
         }
 
         if (user.equals(updatedUser)) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, NO_CHANGES_DETECTED, null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, Constants.NO_CHANGES_DETECTED, null));
         } else if (userService.update(updatedUser)) {
             user = updatedUser;
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, PROFILE_UPDATED_SUCCESSFULLY, null));
+            LOGGER.info(Constants.PROFILE_UPDATED_SUCCESSFULLY + " User id = " + user.getId() );
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, Constants.PROFILE_UPDATED_SUCCESSFULLY, null));
         } else {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ERROR_EDITING_USER, null));
+            LOGGER.error(Constants.ERROR_EDITING_USER + " User id = " + user.getId() );
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Constants.ERROR_EDITING_USER, null));
         }
     }
 
@@ -132,31 +128,33 @@ public class UserManager implements Serializable {
 
     public void changePassword() {
         FacesContext context = FacesContext.getCurrentInstance();
-        ChangePasswordBean bean = (ChangePasswordBean) context.getExternalContext().getRequestMap().get("changePasswordBean");
+        ChangePasswordBean bean = (ChangePasswordBean) context.getExternalContext().getRequestMap().get(Constants.CHANGE_PASSWORD_BEAN);
         errors = Validator.validateChangePasswordForm(bean);
         if (!errors.isEmpty()) {
             String s = errors.entrySet().stream().map(entry -> entry.getKey() + ": " + entry.getValue() + "; ").collect(Collectors.joining());
-            LOGGER.info(INVALID_INPUT + s);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, INVALID_INPUT, s));
+            LOGGER.info(Constants.INVALID_INPUT + s);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Constants.INVALID_INPUT, s));
             return;
         }
         User updatedUser = Util.convertChangePasswordBean(bean, user);
         User dbUser = userService.findById(updatedUser.getId());
-        System.out.println(":::::::::::::::::::"+dbUser);
         if (user.getPassword().equals(updatedUser.getPassword())) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, NO_CHANGES_DETECTED, null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, Constants.NO_CHANGES_DETECTED, null));
         } else if (dbUser.getPassword().equals(bean.getCurrentPassword())) {
             if (userService.update(updatedUser)) {
                 user = updatedUser;
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, PASSWORD_UPDATED_SUCCESSFULLY, null));
+                LOGGER.info(Constants.PROFILE_UPDATED_SUCCESSFULLY + " User id = " + user.getId());
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, Constants.PASSWORD_UPDATED_SUCCESSFULLY, null));
             } else {
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ERROR_CHANGING_PASSWORD, null));
+                LOGGER.error(Constants.ERROR_CHANGING_PASSWORD + " User id = " + user.getId() );
+
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Constants.ERROR_CHANGING_PASSWORD, null));
             }
         } else {
             String message = "You entered wrong user password";
             errors.put("currentPassword", message);
-            LOGGER.info(ERROR_CHANGING_PASSWORD + message);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ERROR_CHANGING_PASSWORD, message));
+            LOGGER.info(Constants.ERROR_CHANGING_PASSWORD + message + ". User id = " + user.getId());
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Constants.ERROR_CHANGING_PASSWORD, message));
         }
     }
 
@@ -173,6 +171,12 @@ public class UserManager implements Serializable {
             extContext.redirect(path);
         } catch (IOException e) {
             LOGGER.error("Cannot redirect to: " + path);
+        }
+    }
+
+    public void verifyLogin() {
+        if (user==null) {
+            redirect("login");
         }
     }
 

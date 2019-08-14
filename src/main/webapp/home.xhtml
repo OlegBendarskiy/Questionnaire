@@ -14,12 +14,12 @@
 <h:body>
     <h2>Ajax Example</h2>
 
-    <h:form>
-        <h:inputText id = "inputName" value = "#{page}"/>
-        <h:commandButton value = "Show Message"/>
-        <h2><h:outputText id = "outputMessage"
-                          value = "#{userData.welcomeMessage != null ?
-            userData.welcomeMessage : ''}"
+    <h:form id = "outputMessage">
+        <h:inputText id = "inputName" value = "#{userData.name}"></h:inputText>
+        <h:commandButton value = "Show Message" action="#{userData.change}" update="outputMessage">
+        </h:commandButton>
+        <h2><h:outputText
+                          value = "#{userData.name}"
         /></h2>
     </h:form>
 </h:body>

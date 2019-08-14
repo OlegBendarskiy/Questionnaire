@@ -1,5 +1,6 @@
 package oleh_bendarskyi.intership_project.questionnaire.service.impl;
 
+import oleh_bendarskyi.intership_project.questionnaire.utils.Constants;
 import oleh_bendarskyi.intership_project.questionnaire.dao.UserDao;
 import oleh_bendarskyi.intership_project.questionnaire.dao.impl.UserDaoImpl;
 import oleh_bendarskyi.intership_project.questionnaire.models.User;
@@ -9,7 +10,7 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import java.util.List;
 
-@ManagedBean(name="userService")
+@ManagedBean(name= Constants.USER_SERVICE)
 @ApplicationScoped
 public class UserServiceImpl implements UserService {
 

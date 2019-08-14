@@ -1,4 +1,4 @@
-package oleh_bendarskyi.intership_project.questionnaire.Utils;
+package oleh_bendarskyi.intership_project.questionnaire.utils;
 
 import oleh_bendarskyi.intership_project.questionnaire.beans.ChangePasswordBean;
 import oleh_bendarskyi.intership_project.questionnaire.beans.EditProfileBean;

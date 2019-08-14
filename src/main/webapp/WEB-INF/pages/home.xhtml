@@ -2,11 +2,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns = "http://www.w3.org/1999/xhtml"
-      xmlns:h = "http://java.sun.com/jsf/html"
-      xmlns:f = "http://java.sun.com/jsf/core"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:head>
     <title>Home</title>
@@ -14,27 +15,106 @@
 </h:head>
 
 <h:body>
-    <ui:composition template="../templates/common.xhtml">
-        <ui:define name="messages">
-            <p:messages id="message" sticky="true" showDetail="true" closable="true"/>
+    <ui:composition id="all" template="../templates/common.xhtml">
+        <ui:define id="message" name="messages">
+            <c:choose id="c1">
+                <c:when id="w1" test="#{questionnaire.success}">
+                    <div style="max-width:400px; max-height:400px; margin: auto; background: aliceblue; border:1px solid darkgray;">
+
+                        <h3>Thank you!</h3>
+                        <h5>Your response was saved.</h5>
+
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <p:messages id="message" sticky="true" showDetail="true" closable="true"/>
+                </c:otherwise>
+            </c:choose>
         </ui:define>
-        <ui:define name="content">
-            <div style="max-width:400px; max-height:400px; margin: auto; padding:30px ; background: aliceblue; border:1px solid darkgray;">
-                <h:graphicImage name="images/logotype.png"/>
-                <h4 style="padding:10px;">Home</h4>
-                <h:form>
-                    <h:panelGrid columns="1" style="margin: auto;">
-                        <p:inputText placeholder="Email" style="width: 300px; padding:7px;" id="email" value="#{loginBean.email}"
-                                     required="true"/>
-                        <p:password placeholder="Password" style="width: 300px; padding:7px;" id="password" value="#{loginBean.password}"
-                                    required="true"/>
-                        <f:facet name="footer">
-                            <p:commandButton value="LOG IN" id="login" style="width: 300px; " update="message"
-                                             action="#{user.performLogin()}"/>
-                        </f:facet>
-                    </h:panelGrid>
-                </h:form>
-            </div>
+        <ui:define id="content" name="content">
+            <c:choose id="c2">
+                <c:when id="w2" test="#{questionnaire.success}"/>
+                <c:otherwise>
+                    <h:form id="record" styleClass="custom-input-form text-left" style="max-width:500px">
+                            <h:panelGrid columns="1" style="margin: auto; overflow: auto; max-height:400px;">
+                                <c:forEach items="#{questionnaire.questionnaireFields.values()}" var="field">
+                                    <c:choose>
+                                        <c:when test="#{field.type eq 'single line text' and field.active}">
+                                            <h:outputText value="#{field.label}#{field.required?'*':''}"
+                                                          for="label#{field.id}"/>
+                                            <p:inputText id="label#{field.id}"
+                                                         required="#{field.required}"
+                                                         value="#{questionnaire.questionnaireRecord[field.label]}"
+                                                         styleClass="#{empty questionnaire.errors['label'] ? '' : 'ui-state-error'}"/>
+                                            <h:outputText value="#{questionnaire.errors['label']}"
+                                                          styleClass="custom-error-message"/>
+                                        </c:when>
+                                        <c:when test="#{field.type eq 'multiline text' and field.active}">
+                                            <h:outputText value="#{field.label}#{field.required?'*':''}"
+                                                          for="label#{field.id}"/>
+                                            <p:inputTextarea rows="6" cols="33" id="label#{field.id}"
+                                                             required="#{field.required}"
+                                                             value="#{questionnaire.questionnaireRecord[field.label]}"
+                                                             styleClass="#{empty questionnaire.errors['label'] ? '' : 'ui-state-error'}"/>
+                                            <h:outputText value="#{questionnaire.errors['label']}"
+                                                          styleClass="custom-error-message"/>
+                                        </c:when>
+                                        <c:when test="#{field.type eq 'radio button' and field.active}">
+                                            <h:outputText value="#{field.label}#{field.required?'*':''}"
+                                                          for="label#{field.id}"/>
+                                            <p:selectOneRadio id="label#{field.id}" dynamic="true"
+                                                              unselectable="#{not field.required}"
+                                                              required="#{field.required}"
+                                                              styleClass="#{empty questionnaire.errors['type'] ? '' : 'ui-state-error'}"
+                                                              value="#{questionnaire.questionnaireRecord[field.label]}">
+                                                <f:selectItems
+                                                        value="#{questionnaire.getSplittedOptions(field.options)}"
+                                                        var="c"
+                                                        itemLabel="#{c}" itemValue="#{c}"/>
+                                            </p:selectOneRadio>
+                                            <h:outputText value="#{questionnaire.errors['label']}"
+                                                          styleClass="custom-error-message"/>
+                                        </c:when>
+                                        <c:when test="#{field.type eq 'checkbox' and field.active}">
+                                            <h:outputText value="#{field.label}#{field.required?'*':''}"
+                                                          for="label#{field.id}"/>
+                                            <p:selectBooleanCheckbox id="label#{field.id}"
+                                                                     value="#{questionnaire.questionnaireRecord[field.label]}"
+                                                                     itemLabel="#{field.label}"/>
+                                            <h:outputText value="#{questionnaire.errors['label']}"
+                                                          styleClass="custom-error-message"/>
+                                        </c:when>
+                                        <c:when test="#{field.type eq 'combobox' and field.active}">
+                                            <h:outputText value="#{field.label}#{field.required?'*':''}"
+                                                          for="label#{field.id}"/>
+                                            <p:selectOneMenu id="label#{field.id}" dynamic="true"
+                                                             styleClass="#{empty questionnaire.errors['type'] ? '' : 'ui-state-error'}"
+                                                             value="#{questionnaire.questionnaireRecord[field.label]}">
+                                                <f:selectItems
+                                                        value="#{questionnaire.getSplittedOptions(field.options)}"
+                                                        var="c"
+                                                        itemLabel="#{c}" itemValue="#{c}"/>
+                                            </p:selectOneMenu>
+                                            <h:outputText value="#{questionnaire.errors['label']}"
+                                                          styleClass="custom-error-message"/>
+                                        </c:when>
+                                        <c:when test="#{field.type eq 'date' and field.active}">
+                                            <h:outputText value="#{field.label}#{field.required?'*':''}"
+                                                          for="label#{field.id}"/>
+                                            <p:calendar id="label#{field.id}"
+                                                        value="#{questionnaire.questionnaireRecord[field.label]}"
+                                                        pattern="MMM dd, yyyy" mask="true"/>
+                                            <h:outputText value="#{questionnaire.errors['label']}"
+                                                          styleClass="custom-error-message"/>
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
+                            </h:panelGrid>
+                        <p:separator/>
+                        <h:commandButton value="SUBMIT" action="#{questionnaire.submit}" update="aaa"/>
+                    </h:form>
+                </c:otherwise>
+            </c:choose>
         </ui:define>
     </ui:composition>
 </h:body>

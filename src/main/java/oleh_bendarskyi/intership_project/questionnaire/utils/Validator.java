@@ -1,4 +1,4 @@
-package oleh_bendarskyi.intership_project.questionnaire.Utils;
+package oleh_bendarskyi.intership_project.questionnaire.utils;
 
 import oleh_bendarskyi.intership_project.questionnaire.beans.ChangePasswordBean;
 import oleh_bendarskyi.intership_project.questionnaire.beans.EditProfileBean;
@@ -60,7 +60,6 @@ public class Validator {
     }
 
     private static void validatePasswords(String password, String confirmPassword, Map<String, String> errors) {
-        System.out.println(":::::::::::::::::::::::::::::::" + password+"|"+confirmPassword);
         if (isBlank(password)) {
             errors.put("password", NULL_FIELD);
             errors.put("confirmPassword", "Incorrect password");

@@ -1,6 +1,6 @@
 package oleh_bendarskyi.intership_project.questionnaire.dao.impl;
 
-import oleh_bendarskyi.intership_project.questionnaire.Utils.HibernateUtil;
+import oleh_bendarskyi.intership_project.questionnaire.utils.HibernateUtil;
 
 import oleh_bendarskyi.intership_project.questionnaire.dao.UserDao;
 import oleh_bendarskyi.intership_project.questionnaire.models.User;

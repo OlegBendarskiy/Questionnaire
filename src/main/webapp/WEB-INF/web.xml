@@ -43,6 +43,11 @@
         <param-value>overcast</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>fileSaveDir</param-name>
+        <param-value>..\Responses</param-value>
+    </context-param>
+
 <!--    <context-param>
         <param-name>javax.faces.CONFIG_FILES</param-name>
         <param-value>/faces-config.xml,/faces-config2.xml</param-value>
