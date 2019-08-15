@@ -27,7 +27,7 @@
                     </div>
                 </c:when>
                 <c:otherwise>
-                    <p:messages id="message" sticky="true" showDetail="true" closable="true"/>
+                    <p:messages id="message" sticky="true" showDetail="false" closable="true"/>
                 </c:otherwise>
             </c:choose>
         </ui:define>
@@ -43,10 +43,9 @@
                                             <h:outputText value="#{field.label}#{field.required?'*':''}"
                                                           for="label#{field.id}"/>
                                             <p:inputText id="label#{field.id}"
-                                                         required="#{field.required}"
                                                          value="#{questionnaire.questionnaireRecord[field.label]}"
-                                                         styleClass="#{empty questionnaire.errors['label'] ? '' : 'ui-state-error'}"/>
-                                            <h:outputText value="#{questionnaire.errors['label']}"
+                                                         styleClass="#{empty questionnaire.errors[field.label] ? '' : 'ui-state-error'}"/>
+                                            <h:outputText value="#{questionnaire.errors[field.label]}"
                                                           styleClass="custom-error-message"/>
                                         </c:when>
                                         <c:when test="#{field.type eq 'multiline text' and field.active}">
@@ -55,8 +54,8 @@
                                             <p:inputTextarea rows="6" cols="33" id="label#{field.id}"
                                                              required="#{field.required}"
                                                              value="#{questionnaire.questionnaireRecord[field.label]}"
-                                                             styleClass="#{empty questionnaire.errors['label'] ? '' : 'ui-state-error'}"/>
-                                            <h:outputText value="#{questionnaire.errors['label']}"
+                                                             styleClass="#{empty questionnaire.errors[field.label] ? '' : 'ui-state-error'}"/>
+                                            <h:outputText value="#{questionnaire.errors[field.label]}"
                                                           styleClass="custom-error-message"/>
                                         </c:when>
                                         <c:when test="#{field.type eq 'radio button' and field.active}">
@@ -64,15 +63,14 @@
                                                           for="label#{field.id}"/>
                                             <p:selectOneRadio id="label#{field.id}" dynamic="true"
                                                               unselectable="#{not field.required}"
-                                                              required="#{field.required}"
-                                                              styleClass="#{empty questionnaire.errors['type'] ? '' : 'ui-state-error'}"
+                                                              styleClass="#{empty questionnaire.errors[field.label] ? '' : 'ui-state-error'}"
                                                               value="#{questionnaire.questionnaireRecord[field.label]}">
                                                 <f:selectItems
                                                         value="#{questionnaire.getSplittedOptions(field.options)}"
                                                         var="c"
                                                         itemLabel="#{c}" itemValue="#{c}"/>
                                             </p:selectOneRadio>
-                                            <h:outputText value="#{questionnaire.errors['label']}"
+                                            <h:outputText value="#{questionnaire.errors[field.label]}"
                                                           styleClass="custom-error-message"/>
                                         </c:when>
                                         <c:when test="#{field.type eq 'checkbox' and field.active}">
@@ -81,21 +79,21 @@
                                             <p:selectBooleanCheckbox id="label#{field.id}"
                                                                      value="#{questionnaire.questionnaireRecord[field.label]}"
                                                                      itemLabel="#{field.label}"/>
-                                            <h:outputText value="#{questionnaire.errors['label']}"
+                                            <h:outputText value="#{questionnaire.errors[field.label]}"
                                                           styleClass="custom-error-message"/>
                                         </c:when>
                                         <c:when test="#{field.type eq 'combobox' and field.active}">
                                             <h:outputText value="#{field.label}#{field.required?'*':''}"
                                                           for="label#{field.id}"/>
                                             <p:selectOneMenu id="label#{field.id}" dynamic="true"
-                                                             styleClass="#{empty questionnaire.errors['type'] ? '' : 'ui-state-error'}"
+                                                             styleClass="#{empty questionnaire.errors[field.label] ? '' : 'ui-state-error'}"
                                                              value="#{questionnaire.questionnaireRecord[field.label]}">
                                                 <f:selectItems
                                                         value="#{questionnaire.getSplittedOptions(field.options)}"
                                                         var="c"
                                                         itemLabel="#{c}" itemValue="#{c}"/>
                                             </p:selectOneMenu>
-                                            <h:outputText value="#{questionnaire.errors['label']}"
+                                            <h:outputText value="#{questionnaire.errors[field.label]}"
                                                           styleClass="custom-error-message"/>
                                         </c:when>
                                         <c:when test="#{field.type eq 'date' and field.active}">
@@ -104,14 +102,14 @@
                                             <p:calendar id="label#{field.id}"
                                                         value="#{questionnaire.questionnaireRecord[field.label]}"
                                                         pattern="MMM dd, yyyy" mask="true"/>
-                                            <h:outputText value="#{questionnaire.errors['label']}"
+                                            <h:outputText value="#{questionnaire.errors[field.label]}"
                                                           styleClass="custom-error-message"/>
                                         </c:when>
                                     </c:choose>
                                 </c:forEach>
                             </h:panelGrid>
                         <p:separator/>
-                        <h:commandButton value="SUBMIT" action="#{questionnaire.submit}" update="aaa"/>
+                        <h:commandButton value="SUBMIT" action="#{questionnaire.submit}" update="content"/>
                     </h:form>
                 </c:otherwise>
             </c:choose>

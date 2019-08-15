@@ -4,6 +4,7 @@ import oleh_bendarskyi.intership_project.questionnaire.beans.ChangePasswordBean;
 import oleh_bendarskyi.intership_project.questionnaire.beans.EditProfileBean;
 import oleh_bendarskyi.intership_project.questionnaire.beans.LogInBean;
 import oleh_bendarskyi.intership_project.questionnaire.beans.SignUpBean;
+import oleh_bendarskyi.intership_project.questionnaire.models.QuestionnaireField;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -76,7 +77,7 @@ public class Validator {
     public static Map<String, String> validateLogInFormBean(LogInBean bean) {
         Map<String, String> errors = new HashMap<>();
         validateEmail(bean.getEmail(), errors);
-        if(isBlank(bean.getPassword())){
+        if (isBlank(bean.getPassword())) {
             errors.put("password", NULL_FIELD);
         }
         return errors;
@@ -93,11 +94,24 @@ public class Validator {
 
     public static Map<String, String> validateChangePasswordForm(ChangePasswordBean bean) {
         Map<String, String> errors = new HashMap<>();
-        if(isBlank(bean.getCurrentPassword()) || validate(bean.getCurrentPassword(), PASSWORD_REGEXP)){
+        if (isBlank(bean.getCurrentPassword()) || validate(bean.getCurrentPassword(), PASSWORD_REGEXP)) {
             errors.put("currentPassword", "Incorrect password");
         }
         validatePasswords(bean.getNewPassword(), bean.getConfirmPassword(), errors);
         return errors;
 
+    }
+
+    public static Map<String, String> validateQuestionnaireForm(Map<String, Object> questionnaireRecord, Map<String, QuestionnaireField> questionnaireFields) {
+        Map<String, String> errors = new HashMap<>();
+        for (Map.Entry<String, QuestionnaireField> field : questionnaireFields.entrySet()) {
+            QuestionnaireField val = field.getValue();
+            boolean isError = val != null && val.isActive() && val.isRequired() &&
+                    (questionnaireRecord.get(val.getLabel()) == null || isBlank(questionnaireRecord.get(val.getLabel()).toString()));
+            if(isError){
+                    errors.put(val.getLabel(), NULL_FIELD);
+            }
+        }
+        return errors;
     }
 }

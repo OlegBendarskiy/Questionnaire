@@ -12,10 +12,6 @@
         <pattern value="/" />
         <view-id value="/WEB-INF/pages/home.jsf" />
     </url-mapping>
-    <url-mapping id="success">
-        <pattern value="/success" />
-        <view-id value="/WEB-INF/pages/success.jsf" />
-    </url-mapping>
     <url-mapping id="registration">
         <pattern value="/registration" />
         <view-id value="/WEB-INF/pages/registration.jsf" />

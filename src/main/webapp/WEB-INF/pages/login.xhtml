@@ -8,6 +8,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 <f:metadata>
     <f:viewAction action="#{user.clearErrors}" onPostBack="true"/>
+    <f:event listener="#{user.verifyIsLoggedIn()}" type="preRenderView"/>
 </f:metadata>
 <h:head>
     <title><ui:insert name="title">Login</ui:insert></title>

@@ -7,8 +7,4 @@ CREATE TABLE questionnaire_response
     CONSTRAINT "questionnaire_response_pkey" PRIMARY KEY (id)
 );
 
-INSERT INTO public.questionnaire_response(id, file_name)
-	VALUES
-	(1, 'response_1'),
-	(2, 'response_2');
 SELECT * FROM questionnaire_response;
