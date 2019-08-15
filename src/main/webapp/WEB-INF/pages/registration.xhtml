@@ -8,7 +8,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 <f:metadata>
     <f:viewAction action="#{user.clearErrors}" onPostBack="true"/>
-    <f:event listener="#{user.verifyIsLoggedIn()}" type="preRenderView"/>
+    <f:event listener="#{user.doCommand('verifyIsLoggedIn')}" type="preRenderView"/>
 </f:metadata>
 <h:head>
     <title>Registration</title>
@@ -24,34 +24,34 @@
                     <h:panelGrid columns="1" style="margin: auto;">
                         <p:inputText placeholder="Email *" id="email"
                                      value="#{signUpBean.email}"
-                                     styleClass="#{empty user.errors['email'] ? '' : 'ui-state-error'}">
+                                     styleClass="#{empty user.userContext.errors['email'] ? '' : 'ui-state-error'}">
                         </p:inputText>
-                        <h:outputText value="#{user.errors['email']}" styleClass="custom-error-message"/>
+                        <h:outputText value="#{user.userContext.errors['email']}" styleClass="custom-error-message"/>
                         <p:password placeholder="Password *" id="password"
                                     value="#{signUpBean.password}"
-                                    styleClass="#{(empty user.errors['password'] and empty user.errors['confirmPassword']) ? '' : 'ui-state-error'}"/>
-                        <h:outputText value="#{user.errors['password']}" styleClass="custom-error-message"/>
+                                    styleClass="#{(empty user.userContext.errors['password'] and empty user.userContext.errors['confirmPassword']) ? '' : 'ui-state-error'}"/>
+                        <h:outputText value="#{user.userContext.errors['password']}" styleClass="custom-error-message"/>
                         <p:password placeholder="Confirm Password *" id="confirmPassword"
                                     value="#{signUpBean.confirmPassword}"
-                                    styleClass="#{(empty user.errors['password'] and empty user.errors['confirmPassword']) ? '' : 'ui-state-error'}"/>
-                        <h:outputText value="#{user.errors['confirmPassword']}"
+                                    styleClass="#{(empty user.userContext.errors['password'] and empty user.userContext.errors['confirmPassword']) ? '' : 'ui-state-error'}"/>
+                        <h:outputText value="#{user.userContext.errors['confirmPassword']}"
                                       styleClass="custom-error-message"/>
                         <p:inputText placeholder="First Name" id="firstName"
                                      value="#{signUpBean.firstName}"
-                                     styleClass="#{empty user.errors['firstName'] ? '' : 'ui-state-error'}"/>
-                        <h:outputText value="#{user.errors['firstName']}" styleClass="custom-error-message"/>
+                                     styleClass="#{empty user.userContext.errors['firstName'] ? '' : 'ui-state-error'}"/>
+                        <h:outputText value="#{user.userContext.errors['firstName']}" styleClass="custom-error-message"/>
                         <p:inputText placeholder="Last Name" id="lastName"
                                      value="#{signUpBean.lastName}"
-                                     styleClass="#{empty user.errors['lastName'] ? '' : 'ui-state-error'}"/>
-                        <h:outputText value="#{user.errors['lastName']}" styleClass="custom-error-message"/>
+                                     styleClass="#{empty user.userContext.errors['lastName'] ? '' : 'ui-state-error'}"/>
+                        <h:outputText value="#{user.userContext.errors['lastName']}" styleClass="custom-error-message"/>
                         <p:inputMask placeholder="Phone Number" id="phoneNumber"
                                      mask="+38 (999) 999-9999"
                                      value="#{signUpBean.phoneNumber}"
-                                     styleClass="#{empty user.errors['phoneNumber'] ? '' : 'ui-state-error'}"/>
-                        <h:outputText value="#{user.errors['phoneNumber']}" styleClass="custom-error-message"/>
+                                     styleClass="#{empty user.userContext.errors['phoneNumber'] ? '' : 'ui-state-error'}"/>
+                        <h:outputText value="#{user.userContext.errors['phoneNumber']}" styleClass="custom-error-message"/>
                         <f:facet name="footer">
                             <p:commandButton value="SIGN UP" id="signUp" update="signUp messages"
-                                             action="#{user.performRegistration()}"/>
+                                             action="#{user.doCommand('performRegistration')}"/>
                         </f:facet>
                     </h:panelGrid>
                 </h:form>
