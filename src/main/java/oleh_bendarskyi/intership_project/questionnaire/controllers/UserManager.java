@@ -54,6 +54,7 @@ public class UserManager implements Serializable {
     }
 
     public void clearErrors() {
+        LOGGER.info("Cleaning errors");
         userContext.setErrors(null);
     }
 }
