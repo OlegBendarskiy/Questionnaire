@@ -42,11 +42,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User delete(User user) {
-        return null;
+        return dao.delete(user);
     }
 
     @Override
     public List<User> getAll() {
-        return null;
+        return dao.getAll();
     }
 }

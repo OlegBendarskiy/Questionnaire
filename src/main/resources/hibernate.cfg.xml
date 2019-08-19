@@ -25,6 +25,5 @@
 
         <mapping class="oleh_bendarskyi.intership_project.questionnaire.models.User"/>
         <mapping class="oleh_bendarskyi.intership_project.questionnaire.models.QuestionnaireField"/>
-        <mapping class="oleh_bendarskyi.intership_project.questionnaire.models.QuestionnaireResponse"/>
     </session-factory>
 </hibernate-configuration>

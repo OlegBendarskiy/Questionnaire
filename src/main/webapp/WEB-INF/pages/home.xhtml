@@ -37,7 +37,7 @@
                 <c:otherwise>
                     <h:form id="record" styleClass="custom-input-form text-left" style="max-width:500px">
                             <h:panelGrid columns="1" style="margin: auto; overflow: auto; max-height:400px;">
-                                <c:forEach items="#{questionnaire.questionnaireFields.values()}" var="field">
+                                <c:forEach items="#{questionnaireContext.questionnaireFields.values()}" var="field">
                                     <c:choose>
                                         <c:when test="#{field.type eq 'single line text' and field.active}">
                                             <h:outputText value="#{field.label}#{field.required?'*':''}"
