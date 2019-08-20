@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:metadata>
+    <f:viewAction action="#{user.clearErrors}" onPostBack="true"/>
+    <f:event listener="#{user.doCommand('verifyLogin')}" type="preRenderView"/>
+</f:metadata>
+<h:head>
+    <title>Registration</title>
+</h:head>
+<h:body>
+    <ui:composition template="../templates/common.xhtml">
+        <ui:define name="content">
+            <div class="custom-input-form text-left" style="max-width: 1400px;">
+                <h:form id="fields">
+                    <p:dataTable var="questionnaireField" value="#{questionnaireContext.questionnaireFields.values()}"
+                                 rows="4"
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                        <f:facet name="header">
+                            <div style="padding: 10px; margin: 0; float: left;">Fields</div>
+                            <p:commandButton value="ADD FIELD" action="#{questionnaire.getFieldDialog('add')}"
+                                             styleClass="custom-ui-button">
+                                <f:param name="questionnaireFieldId" value="#{questionnaireField.id}"/>
+                            </p:commandButton>
+                        </f:facet>
+                        <p:column headerText="Label">
+                            <h:outputText value="#{questionnaireField.label}"/>
+                        </p:column>
+
+                        <p:column headerText="Type">
+                            <h:outputText value="#{questionnaireField.type}"/>
+                        </p:column>
+
+                        <p:column headerText="Required">
+                            <h:outputText value="#{questionnaireField.required}"/>
+                        </p:column>
+
+                        <p:column headerText="Is Active">
+                            <h:outputText value="#{questionnaireField.active}"/>
+                        </p:column>
+
+                        <p:column headerText="" style="text-align: center">
+                            <p:commandButton value="EDIT" action="#{questionnaire.getFieldDialog('edit')}"
+                                             styleClass="custom-ui-button">
+                                <f:param name="questionnaireFieldId" value="#{questionnaireField.id}"/>
+                            </p:commandButton>
+                            <p:commandButton value="DELETE" action="#{questionnaire.deleteField(questionnaireField.id)}"
+                                             styleClass="custom-ui-button">
+                                <p:confirm header="Deleting field: #{questionnaireField.label}" message="Are you sure you want to delete this field?" icon="pi pi-exclamation-triangle" />
+                                <f:param name="questionnaireFieldId" value="#{questionnaireField.id}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                    </p:confirmDialog>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+<f:metadata>
+    <f:viewAction action="#{user.clearErrors}" onPostBack="true"/>
+    <f:event listener="#{user.doCommand('verifyLogin')}" type="preRenderView"/>
+</f:metadata>
+<h:head>
+    <title>Registration</title>
+</h:head>
+<h:body>
+    <ui:composition template="../templates/common.xhtml">
+        <ui:define name="content">
+            <div class="custom-input-form text-left" style="max-width: 1400px;">
+                <h:form id="fields">
+                    <p:dataTable var="record" value="#{questionnaire.questionnaireContext.records}"
+                                 rows="4"
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                        <f:facet name="header">
+                            <div style="padding: 10px; margin: 0; float: left;">Responses</div>
+                        </f:facet>
+                        <c:forEach items="#{questionnaireContext.questionnaireFields.values()}" var="field">
+                            <p:column headerText="#{field.label}">
+                                <h:outputText value="#{empty record[field.label] ? 'N/A' :
+                                (record[field.label].length() gt 14 ? record[field.label].substring(0,12).concat('...') :record[field.label])}"/>
+                            </p:column>
+                        </c:forEach>
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

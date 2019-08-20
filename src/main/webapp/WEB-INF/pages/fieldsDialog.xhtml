@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:metadata>
+    <f:event listener="#{user.doCommand('verifyLogin')}" type="preRenderView"/>
+</f:metadata>
+<h:head>
+    <title>Registration</title>
+</h:head>
+
+<h:body>
+    <ui:composition template="../templates/common.xhtml">
+        <ui:define name="content">
+            <h:form id="fieldsDialog">
+                <p:dialog header="Add Field" widgetVar="dlg2" minHeight="400" modal="true" visible="true"
+                          closable="false">
+                    <h:panelGrid columns="1" style="margin: auto;">
+                        <h:outputText value="Label" for="label"/>
+                        <p:inputText id="label"
+                                     value="#{questionnaire.questionnaireField.label}"
+                                     styleClass="#{empty questionnaire.errors['label'] ? '' : 'ui-state-error'}"/>
+                        <h:outputText value="#{questionnaire.errors['label']}" styleClass="custom-error-message"/>
+
+                        <h:outputText value="Type" for="type"/>
+                        <p:selectOneMenu id="type" dynamic="true"
+                                         styleClass="#{empty questionnaire.errors['type'] ? '' : 'ui-state-error'}"
+                                         value="#{questionnaire.questionnaireField.type}">
+                            <f:selectItems value="#{questionnaireContext.types}" var="c"
+                                           itemLabel="#{c.name}" itemValue="#{c.name}"/>
+                        </p:selectOneMenu>
+                        <h:outputText value="#{questionnaire.errors['type']}" styleClass="custom-error-message"/>
+
+                        <h:outputText value="Options" for="options"/>
+                        <p:inputTextarea rows="6" cols="33" id="options"
+                                         value="#{questionnaire.questionnaireField.options}"
+                                         styleClass="#{empty questionnaire.errors['type'] ? '' : 'ui-state-error'}"/>
+                        <h:outputText value="#{questionnaire.errors['type']}" styleClass="custom-error-message"/>
+                        <h:panelGrid columns="2" style="margin: auto;">
+                            <p:selectBooleanCheckbox id="required"
+                                                     value="#{questionnaire.questionnaireField.required}"
+                                                     itemLabel="Required"/>
+                            <p:selectBooleanCheckbox id="active"
+                                                     value="#{questionnaire.questionnaireField.active}"
+                                                     itemLabel="Active"/>
+                        </h:panelGrid>
+                        <p:separator/>
+                        <f:facet name="footer">
+                            <p:commandButton value="SAVE"
+                                             action="#{questionnaire.saveDialog()}"
+                                             styleClass="custom-ui-button"/>
+                            <p:commandButton value="CLOSE" action="#{questionnaire.closeDialog}"
+                                             styleClass="custom-ui-button"/>
+                        </f:facet>
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
